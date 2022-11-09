@@ -16,3 +16,4 @@ gem "awesome_print"
 gem "htmlentities"
 gem "rss"
 gem 'sinatra'
+gem "redis"

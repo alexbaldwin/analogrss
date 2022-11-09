@@ -7,6 +7,7 @@ require "ferrum"
 require "nokogiri"
 require 'open-uri'
 require 'rss'
+require 'redis'
 
 analog_uri = "https://www.reddit.com/r/analog/top.json"
 
@@ -88,8 +89,6 @@ analog_items.each do |item|
 			nil
 		end
 
-	ap item["data"]["preview"]
-
 	next if image_url == nil
 
 	reddit_ig_handle = fetch_ig_from_reddit(author)
@@ -106,7 +105,6 @@ analog_items.each do |item|
 			nil
 		end
 	next if ig_handle == nil
-	ap ig_handle
 
 	verified = 
 		if ig_handle != nil
@@ -122,6 +120,8 @@ analog_items.each do |item|
 	post_hash = {id: id, title: title, description: description, author: author, ig_handle: ig_handle, verified: verified, created_at: created_at, nsfw: nsfw, upvotes: upvotes, ratio: ratio, permalink: permalink, image_url: image_url, imgix_url: imgix_url}
 
 	approved_posts << post_hash
+
+	ap approved_posts
 end
 
 	rss = RSS::Maker.make("atom") do |maker|
@@ -140,6 +140,10 @@ end
 		end
 	end
 
-	File.open('analogprocess.rss', 'w') { |file| file.write(rss) }
+	# File.open('analogprocess.rss', 'w') { |file| file.write(rss) }
+
+	redis = Redis.new(url: "redis://:p119783d3705854696d68cbbe3e8218b1f2312d40dc40de730a7ff0ba065e9eed@ec2-35-172-46-76.compute-1.amazonaws.com:6999")
+	redis.set("rss", rss.to_s)
+
 
 
