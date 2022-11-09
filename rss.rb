@@ -133,6 +133,7 @@ end
 		approved_posts.each do |post|
 			maker.items.new_item do |item|
 				item.id = post[:id]
+				item.link = post[:permalink]
 				item.title = post[:description]
 				item.summary = post[:imgix_url]
 				item.updated = post[:created_at]
