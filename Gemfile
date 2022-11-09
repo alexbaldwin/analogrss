@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-ruby "3.1.2"
 
 source "https://rubygems.org"
 
@@ -16,3 +15,4 @@ gem "json"
 gem "awesome_print"
 gem "htmlentities"
 gem "rss"
+gem 'sinatra'
