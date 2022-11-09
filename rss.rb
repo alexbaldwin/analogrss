@@ -88,6 +88,8 @@ analog_items.each do |item|
 			nil
 		end
 
+	ap item["data"]["preview"]
+
 	next if image_url == nil
 
 	reddit_ig_handle = fetch_ig_from_reddit(author)
@@ -130,12 +132,8 @@ end
 		approved_posts.each do |post|
 			maker.items.new_item do |item|
 				item.id = post[:id]
-				item.title = post[:title]
-				item.summary = post[:description]
-				item.content.type = 'xhtml'
-				item.content.xml = <<-XHTML
-					"#{post[:imgix_url]}"
-					XHTML
+				item.title = post[:description]
+				item.summary = post[:imgix_url]
 				item.updated = post[:created_at]
 			end
 		end
