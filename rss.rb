@@ -106,6 +106,7 @@ analog_items.each do |item|
 			nil
 		end
 	next if ig_handle == nil
+	ap ig_handle
 
 	verified = 
 		if ig_handle != nil
@@ -126,8 +127,8 @@ end
 	rss = RSS::Maker.make("atom") do |maker|
 		maker.channel.author = "analogprocess"
 		maker.channel.updated = Time.now.to_s
-		maker.channel.about = ""
-		maker.channel.title = "analogprocess"
+		maker.channel.about = "Analog Process"
+		maker.channel.title = "@analogprocess"
 	
 		approved_posts.each do |post|
 			maker.items.new_item do |item|
