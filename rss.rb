@@ -127,12 +127,12 @@ end
 	rss = RSS::Maker.make("atom") do |maker|
 		maker.channel.author = "analogprocess"
 		maker.channel.updated = Time.now.to_s
-		maker.channel.about = "Analog Process"
+		maker.channel.about = "https://analogrss.herokuapp.com/analogprocess.rss"
 		maker.channel.title = "@analogprocess"
 	
 		approved_posts.each do |post|
 			maker.items.new_item do |item|
-				item.id = post[:id]
+				item.id = post[:permalink]
 				item.link = post[:permalink]
 				item.title = post[:description]
 				item.summary = post[:imgix_url]
