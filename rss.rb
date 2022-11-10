@@ -19,7 +19,7 @@ data_hash = JSON.parse(analog_json)
 analog_items = data_hash["data"]["children"]
 
 def fetch_ig_from_reddit(reddit_username)
-	browser = Ferrum::Browser.new(timeout: 20)
+	browser = Ferrum::Browser.new(timeout: 30)
 	browser.go_to("https://www.reddit.com/user/#{reddit_username}/")
 	html = browser.body
 
@@ -47,6 +47,7 @@ def ig_from_flair(flair)
 			.gsub(/\insta: (\w+)/, '\1')
 			.gsub(/\ig: (\w+)/, '\1')
 			.gsub('/', '')
+			.gsub(' ', '')
 	if flair_handle != ""
 		flair_handle
 	else
