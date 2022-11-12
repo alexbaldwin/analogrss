@@ -20,7 +20,9 @@ analog_items = data_hash["data"]["children"]
 
 def fetch_ig_from_reddit(reddit_username)
 	browser = Ferrum::Browser.new(timeout: 30)
+	ap browser
 	browser.go_to("https://www.reddit.com/user/#{reddit_username}/")
+	ap browser.body
 	html = browser.body
 
 	browser.quit
