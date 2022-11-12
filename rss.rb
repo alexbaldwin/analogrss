@@ -20,15 +20,15 @@ analog_items = data_hash["data"]["children"]
 
 def fetch_ig_from_reddit(reddit_username)
 	browser = Ferrum::Browser.new(timeout: 30)
-	ap browser
 	browser.go_to("https://www.reddit.com/user/#{reddit_username}/")
-	ap browser.body
 	html = browser.body
 
 	browser.quit
 
 	@doc = Nokogiri::XML(html)
 	ig_result = @doc.xpath("//img[contains(@src, 'instagram')]")
+
+	ap ig_result
 
 	if ig_result[0] != nil
 		ig_result[0].text.to_s.downcase.strip
@@ -60,7 +60,7 @@ end
 
 def verify_ig(ig_handle)
 	# Verify the account is good
-	response = HTTParty.get("https://www.instagram.com/#{ig_handle}/")
+	response = HTTParty.get("https://www.instagram.com/#{ig_handle}/", {headers: {"User-Agent" => "Httparty Analog RSS Feed"}})
 	# Debug headers
 	# ap response.headers
 	verification = response.headers["reporting-endpoints"]
