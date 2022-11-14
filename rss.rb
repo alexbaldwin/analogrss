@@ -58,9 +58,10 @@ end
 
 def verify_ig(ig_handle)
 	# Verify the account is good
+	ap "Testing #{ig_handle}"
 	response = HTTParty.get("https://www.instagram.com/#{ig_handle}/", {headers: {"User-Agent" => "Httparty Analog RSS Feed"}})
 	# Debug headers
-	# ap response.headers
+	ap response.headers
 	verification = response.headers["reporting-endpoints"]
 	# return true if the reporting-endpoint exists
 	verification != nil && verification.to_s  != ""
