@@ -69,6 +69,10 @@ def verify_ig(ig_handle)
         @doc = Nokogiri::XML(html)
         username_result = @doc.xpath("//title")
 
+	puts html
+
+	ap username_result
+
 	if username_result[0]
 		ap username_result[0].text.downcase
 		# return true if the reporting-endpoint exists
