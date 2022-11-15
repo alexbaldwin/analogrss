@@ -59,12 +59,24 @@ end
 def verify_ig(ig_handle)
 	# Verify the account is good
 	ap "Testing #{ig_handle}"
-	response = HTTParty.get("https://www.instagram.com/#{ig_handle}/", {headers: {"User-Agent" => "Httparty Analog RSS Feed"}})
-	# Debug headers
-	ap response.headers
-	verification = response.headers["reporting-endpoints"]
-	# return true if the reporting-endpoint exists
-	verification != nil && verification.to_s  != ""
+
+	browser = Ferrum::Browser.new(timeout: 30, process_timeout: 60)
+        browser.go_to("https://www.instagram.com/#{ig_handle}/")
+        html = browser.body
+
+        browser.quit
+
+        @doc = Nokogiri::XML(html)
+        username_result = @doc.xpath("//title")
+
+	if username_result[0]
+		ap username_result[0].text.downcase
+		# return true if the reporting-endpoint exists
+		return username_result[0].text.downcase.include? ig_handle.downcase
+	else
+		# return false if we don't get a result
+		return false
+	end
 end
 
 
