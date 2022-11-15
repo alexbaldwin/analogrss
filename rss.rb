@@ -60,7 +60,7 @@ def verify_ig(ig_handle)
 	# Verify the account is good
 	ap "Testing #{ig_handle}"
 
-	browser = Ferrum::Browser.new(timeout: 30, process_timeout: 60)
+	browser = Ferrum::Browser.new(timeout: 30, process_timeout: 60, browser_options: { 'no-sandbox': nil })
         browser.go_to("https://www.instagram.com/#{ig_handle}/")
         html = browser.body
 
